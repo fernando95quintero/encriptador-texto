@@ -1,0 +1,476 @@
+:root {
+  --font-primary: Arial, Helvetica, sans-serif;
+
+  --color-light-bg: #fcfcfc;
+  --color-light-text1: #0a3871;
+  --color-light-text2: #495057;
+
+  --color-light-bg-exclamation: #67808E;
+  --color-light-information: #495057;
+
+  --color-light-shadow-encrypt: #22262a;
+  --color-light-active-encrypt: #22262a;
+
+  --color-light-shadow-decrypt: #343A40;
+  --color-light-active-decrypt: #343A40;
+
+  --color-light-message1: #343a40;
+  --color-light-message2: #adb5bd;
+
+
+  --color-invalid: #e00404;
+  --color-btn-encrypt-hover: #0a3891;
+  --color-btn-decrypt-hover: #dbe2ff;
+  --color-shadow-messages: #ced4da;
+
+
+  --color-dark-bg: #202225;
+  --color-dark-text1: #fcfcfc;
+  --color-dark-text2: #fcfcfc;
+
+  --color-dark-exclamation: #67808E;
+
+  --color-dark-shadow-encrypt: #ced4da;
+  --color-dark-active-encrypt: #dbe2ff;
+
+  --color-dark-shadow-decrypt: #ced4da;
+  --color-dark-active-decrypt: #dbe2ff;
+
+  --color-dark-message1: #adb5bd;
+  --color-dark-message2: #444d55;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-bg);
+}
+
+body.light {
+  --color-bg: var(--color-light-bg);
+  --color-text1: var(--color-light-text1);
+
+  --color-exclamation: var(--color-light-bg);
+  --color-bg-exclamation: var(--color-light-bg-exclamation);
+
+  --color-information: var(--color-light-information);
+
+  --color-shadow-btn-encrypt: var(--color-light-shadow-encrypt);
+  --color-active-btn-encrypt: var(--color-light-active-encrypt);
+
+  --color-shadow-btn-decrypt: var(--color-light-shadow-decrypt);
+  --color-active-btn-decrypt: var(--color-light-active-decrypt);
+
+  --color-message1: var(--color-light-message1);
+  --color-message2: var(--color-light-message2);
+
+  --color-text2: var(--color-light-text2);
+}
+
+body.dark {
+  --color-bg: var(--color-dark-bg);
+  --color-text1: var(--color-dark-text1);
+
+  --color-exclamation: var(--color-dark-exclamation);
+  --color-bg-exclamation: var(--color-light-bg);
+
+  --color-information: var(--color-light-bg);
+
+  --color-shadow-btn-encrypt: var(--color-dark-shadow-encrypt);
+  --color-active-btn-encrypt: var(--color-dark-active-encrypt);
+
+  --color-shadow-btn-decrypt: var(--color-dark-shadow-decrypt);
+  --color-active-btn-decrypt: var(--color-dark-active-decrypt);
+
+  --color-message1: var(--color-dark-message1);
+  --color-message2: var(--color-dark-message2);
+
+  --color-text2: var(--color-dark-text2);
+}
+
+.theme-btn {
+  position: fixed;
+  z-index: 999;
+  top: 2vh;
+  right: 2vh;
+  cursor: pointer;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  font-size: 2rem;
+  background-color: var(--color-light-text1);
+  outline: none;
+  border: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 0 1.5rem 1.5rem;
+  gap: 3rem;
+}
+
+.letter {
+  max-width: 100%;
+  height: 6.5rem;
+}
+
+.encryption-container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: space-between;
+}
+
+.text1 {
+  width: 100%;
+  field-sizing: content;
+  resize: none;
+  border: none;
+  padding: 0;
+  margin: 1.5rem 0 3rem;
+  font-size: 2rem;
+  background-color: var(--color-bg);
+  color: var(--color-text1);
+  overflow-wrap: break-word;
+  text-wrap: pretty;
+  hyphens: auto;
+}
+
+.text1:focus {
+  outline: none;
+}
+
+.text1::placeholder {
+  font-size: 2rem;
+  color: var(--color-text1);
+  font-family: var(--font-primary);
+}
+
+.text1::selection {
+  background-color: var(--color-light-text1);
+  color: var(--color-light-bg);
+}
+
+.error {
+  display: inline-block;
+  position: relative;
+  bottom: 1.8rem;
+  opacity: 0;
+}
+
+.activo {
+  background-color: var(--color-light-text1);
+  color: var(--color-light-bg);
+  font-family: var(--font-primary);
+  font-size: 1.3rem;
+  padding: 0.5rem;
+  text-align: center;
+  border-radius: 0.5rem;
+  transition: opacity 0.5s linear;
+  opacity: 1;
+  overflow-wrap: break-word;
+  text-wrap: pretty;
+  hyphens: auto;
+}
+
+.activo::before {
+  content: "";
+  position: absolute;
+  top: -2.5rem;
+  left: 2rem;
+  border-top: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 20px solid var(--color-light-text1);
+  border-left: 20px solid transparent;
+}
+
+.information-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.exclamation {
+  width: 18px;
+  height: 18px;
+  color: var(--color-exclamation);
+  background-color: var(--color-bg-exclamation);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: end;
+  margin-right: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.information {
+  color: var(--color-information);
+  font-family: var(--font-primary);
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.exclamation-invalid {
+  background-color: var(--color-invalid);
+  color: var(--color-light-bg);
+}
+
+.information-invalid {
+  color: var(--color-invalid);
+}
+
+.buttons-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.btn {
+  padding: 1.3rem 0;
+  border-radius: 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.btn:focus {
+  outline: none;
+}
+
+.btn-encriptar {
+  background-color: var(--color-light-text1);
+  border: none;
+  color: var(--color-light-bg);
+  box-shadow: 1.5px 1.5px 1.5px 1.5px var(--color-shadow-btn-encrypt);
+}
+
+.btn-encriptar:hover {
+  background-color: var(--color-btn-encrypt-hover);
+}
+
+.btn-encriptar:active {
+  box-shadow: 0.5px 0.5px 1px 1px var(--color-active-btn-encrypt);
+}
+
+.btn-desencriptar {
+  background-color: var(--color-light-bg);
+  border: 1px solid var(--color-light-text1);
+  color: var(--color-light-text1);
+  box-shadow: 1.5px 1.5px 1.5px 1.5px var(--color-shadow-btn-decrypt);
+}
+
+.btn-desencriptar:hover {
+  background-color: var(--color-btn-decrypt-hover);
+}
+
+.btn-desencriptar:active {
+  box-shadow: 0.5px 0.5px 1px 1px var(--color-active-btn-decrypt);
+}
+
+.messages {
+  padding: 1.5rem;
+  box-shadow: 0.2rem 0.2rem 1rem var(--color-shadow-messages);
+  border-radius: 2rem;
+}
+
+.messages-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.messages-container img {
+  margin-bottom: 1rem;
+}
+
+.message1 {
+  margin: 0 0 1rem;
+  font-size: 1.7rem;
+  color: var(--color-message1);
+  font-family: var(--font-primary);
+  font-weight: bold;
+  text-align: center;
+  overflow-wrap: break-word;
+  text-wrap: pretty;
+  hyphens: auto;
+}
+
+.message2 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: var(--color-message2);
+  font-family: var(--font-primary);
+  text-align: center;
+  overflow-wrap: break-word;
+  text-wrap: pretty;
+  hyphens: auto;
+}
+
+.text2 {
+  width: 100%;
+  field-sizing: content;
+  margin-bottom: 2rem;
+  resize: none;
+  border: none;
+  padding: 0;
+  font-size: 2rem;
+  color: var(--color-text2);
+  background-color: var(--color-bg);
+  overflow-wrap: break-word;
+  text-wrap: pretty;
+  hyphens: auto;
+}
+
+.text2:focus {
+  outline: none;
+}
+
+.text2::selection {
+  background-color: var(--color-light-text1);
+  color: var(--color-light-bg);
+}
+
+.btn-copiar {
+  width: 100%;
+  background-color: var(--color-light-bg);
+  border: 1px solid var(--color-light-text1);
+  color: var(--color-light-text1);
+  padding: 1.3rem 0;
+  border-radius: 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  box-shadow: 1.5px 1.5px 1.5px 1.5px var(--color-shadow-btn-decrypt);
+  font-weight: bold;
+}
+
+.btn-copiar:focus {
+  outline: none;
+}
+
+.btn-copiar:hover {
+  background-color: var(--color-btn-decrypt-hover);
+}
+
+.btn-copiar:active {
+  box-shadow: 0.5px 0.5px 1px 1px var(--color-active-btn-decrypt);
+}
+
+@media screen and (min-width: 431px) {
+
+  .main {
+    max-width: 35.8rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+}
+
+@media screen and (max-width: 360px) {
+
+  .activo {
+    font-size: 1.2rem;
+  }
+  
+}
+
+@media screen and (min-width: 768px) {
+
+  .main {
+    max-width: 50rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .buttons-container {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .btn {
+    width: 100%;
+  }
+  
+}
+
+@media screen and (max-width: 1023px) {
+
+  .messages-container img {
+    display: none;
+  }
+
+}
+
+@media screen and (min-width: 1024px) {
+
+  .theme-btn {
+    right: 55vh;
+  }
+
+  .main {
+    max-width: 75rem;
+    display: flex;
+    flex-direction: row;
+    padding: 1.5rem 1.5rem;
+  }
+
+  .encryption-container {
+    height: 92vh;
+  }
+
+  .buttons-container {
+    padding-bottom: 1.5rem;
+  }
+
+  .messages {
+    display: flex;
+  }
+
+  .messages-container {
+    width: 16rem;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .encryption-message {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 16rem;
+  }
+
+}
+
+@media screen and (min-width: 1200px) {
+
+  .theme-btn {
+    right: 73vh;
+  }
+
+  .messages-container {
+    width: 18rem;
+  }
+
+  .encryption-message {
+    width: 18rem;
+  }
+  
+}
